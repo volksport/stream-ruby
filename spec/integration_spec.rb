@@ -205,6 +205,10 @@ describe "Integration tests" do
             @feed42.follow('flat', '43')
         end
 
+        example "following a feed with activity_copy_limit" do
+            @feed42.follow('flat', 'r43', 1)
+        end
+
         example "retrieve feed with no followers" do
             lonely = @client.feed('flat', 'rlonely')
             response = lonely.followers()
@@ -291,7 +295,7 @@ describe "Integration tests" do
         end
 
         example "add incomplete activity" do
-            expect { 
+            expect {
                 @feed42.add_activity(Hash.new)
             }.to raise_error Stream::StreamApiResponseException
         end

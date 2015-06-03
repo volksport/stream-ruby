@@ -90,12 +90,13 @@ module Stream
             @client.make_request(:delete, uri, @signature)
         end
 
-        def follow(target_feed_slug, target_user_id)
+        def follow(target_feed_slug, target_user_id, activity_copy_limit = nil)
             uri = "/feed/#{@feed_url}/follows/"
             follow_data = {
                 :target => "#{target_feed_slug}:#{target_user_id}",
                 :target_token => @client.feed(target_feed_slug, target_user_id).token
             }
+            follow_data.store(:activity_copy_limit, activity_copy_limit) if !activity_copy_limit.nil?
             @client.make_request(:post, uri, @signature, {}, follow_data)
         end
 
